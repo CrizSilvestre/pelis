@@ -730,6 +730,7 @@
     e.preventDefault();
     var correo = mailinput.value.trim();
     if(!correo || !emisionActiva()) return;
+    var modoPrueba = /[?&]test=1/.test(location.search);
 
     mailsend.disabled = true;
     mailsend.textContent = "Emitiendo…";
@@ -752,15 +753,21 @@
         template_params: { to_email: correo, fecha: fecha, pnr: "2P3L15" }
       })
     }).then(function(r){
-      if(!r.ok) throw new Error(r.status);
+      if(!r.ok){
+        return r.text().then(function(t){
+          throw new Error((t || "").trim() || ("HTTP " + r.status));
+        });
+      }
       mailnote.className = "mailnote ok";
       mailnote.textContent = "Pase emitido. Revísalo en tu correo (mira también el spam).";
       mailsend.textContent = "Emitido ✈";
       mailinput.disabled = true;
       avisarEmision(correo);
-    }).catch(function(){
+    }).catch(function(err){
       mailnote.className = "mailnote bad";
-      mailnote.textContent = "No se pudo emitir. Inténtalo otra vez en un momento.";
+      mailnote.textContent = modoPrueba
+        ? ("EmailJS responde: " + ((err && err.message) || "sin detalle"))
+        : "No se pudo emitir. Inténtalo otra vez en un momento.";
       mailsend.disabled = false;
       mailsend.textContent = "Emitir pase";
     });
