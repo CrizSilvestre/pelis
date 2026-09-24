@@ -442,34 +442,36 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------------- aviso al correo cuando dice que sí ----------------
-     Pega aquí la Access Key de web3forms.com. Si queda vacía, no se
-     envía nada y la página funciona exactamente igual.                */
-  var AVISO_KEY = "";
+     Abrir la página con ?test=1 manda el aviso marcado como PRUEBA,
+     para distinguirlo del de verdad.                                 */
+  var AVISO_KEY = "fa3b75d7-2356-4fdc-a551-e15e114f16da";
 
   function avisar(){
     if(!AVISO_KEY) return;
+    var prueba = /[?&]test=1/.test(location.search);
+    var cuando;
     try{
-      var cuando = new Date().toLocaleString("es-DO", {dateStyle:"full", timeStyle:"short"});
+      cuando = new Date().toLocaleString("es-DO", {
+        dateStyle:"full", timeStyle:"short", timeZone:"America/Santo_Domingo"
+      });
+    }catch(e){ cuando = new Date().toString(); }
+
+    try{
       fetch("https://api.web3forms.com/submit", {
         method:"POST",
         headers:{"Content-Type":"application/json","Accept":"application/json"},
         body: JSON.stringify({
           access_key: AVISO_KEY,
-          subject: "MV 0208 - Confirmado",
           from_name: "Nocturno Air",
-          message: "Dijo que si.\n\n" + cuando + "\nPunto de encuentro: PELIS - play 20:00 AST"
+          subject: prueba ? "MV 0208 - PRUEBA" : "MV 0208 - Dijo que si",
+          message: (prueba ? "*** PRUEBA (abriste la pagina con ?test=1) ***\n\n" : "")
+                 + "Dijo que si.\n\n"
+                 + "Hora en RD: " + cuando + "\n"
+                 + "Punto de encuentro: PELIS - play 20:00 AST"
         })
       }).catch(function(){});
     }catch(e){}
   }
-
-  /* ---------------- fecha de hoy en el talón ---------------- */
-  try{
-    var d = new Date();
-    var meses = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
-    document.getElementById("stub-date").textContent =
-      String(d.getDate()).padStart(2,"0") + " " + meses[d.getMonth()];
-  }catch(e){}
 
   /* ---------------- cielo estrellado ---------------- */
   var sky = document.getElementById("sky"), sctx = sky.getContext("2d"), stars = [], sw=0, sh=0;
