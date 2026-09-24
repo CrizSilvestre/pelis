@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#070B1F">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pase de abordar &middot; MV 0208">
+<meta property="og:description" content="Nocturno Air &middot; embarque 20:00 AST. Tienes un asiento asignado.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23070B1F'/%3E%3Cpath d='M12 4.4c.55 0 1 .45 1 1v5.1l7 4v1.7l-7-2.2v4.1l2.2 1.5v1.2L12 20.2l-3.2.6v-1.2l2.2-1.5v-4.1l-7 2.2v-1.7l7-4V5.4c0-.55.45-1 1-1z' fill='%23FF9A6B'/%3E%3C/svg%3E">
+<style>
+  html{box-sizing:border-box;color-scheme:light}
+  :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  body{margin:0;background:#FAF9F7;color:#1a1a1a;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Vuelo MV 0208</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..500,0..100,0..1&family=Space+Mono:wght@400;700&display=swap">
+
+<style>
+  :root{
+    --sky-top:#070B1F;
+    --sky-mid:#171233;
+    --sky-glow:#3A2154;
+    --ember:#FF9A6B;
+    --rose:#FF5D7E;
+    --rose-deep:#C93A5C;
+    --paper:#F3ECE2;
+    --paper-edge:#E3D9CB;
+    --ink:#15182B;
+    --ink-soft:#616579;
+    --ink-faint:#9A9AA6;
+    --ok:#2E8F72;
+    --star:#FFE8D2;
+    color-scheme:dark;
+  }
+
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(120% 80% at 50% 108%, rgba(255,154,107,.30) 0%, rgba(255,93,126,.12) 28%, transparent 62%),
+      radial-gradient(90% 70% at 18% 4%, var(--sky-glow) 0%, transparent 55%),
+      linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 58%, #24143A 100%);
+    background-attachment:fixed;
+    color:var(--paper);
+    font-family:"Space Mono","SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  #sky{position:fixed;inset:0;z-index:0;pointer-events:none;}
+  #burst{position:fixed;inset:0;z-index:40;pointer-events:none;}
+
+  .plane-amb{
+    position:fixed;top:12%;left:-90px;z-index:1;width:54px;opacity:.45;
+    animation:cruise 44s linear infinite;pointer-events:none;
+  }
+  .plane-amb svg{display:block;width:100%;height:auto;}
+  @keyframes cruise{
+    0%{transform:translate(0,0) rotate(-4deg);opacity:0;}
+    8%{opacity:.45;}
+    92%{opacity:.45;}
+    100%{transform:translate(calc(100vw + 180px),-40px) rotate(-4deg);opacity:0;}
+  }
+
+  .wrap{
+    position:relative;z-index:2;
+    min-height:100%;
+    display:grid;place-items:center;
+    padding:0 16px;
+    padding-block:32px 40px;
+    box-sizing:border-box;
+  }
+
+  .stage{width:100%;max-width:560px;display:flex;flex-direction:column;gap:18px;}
+
+  /* ---------- airplane-mode strip ---------- */
+  .modebar{
+    display:flex;align-items:center;gap:12px;
+    padding:10px 14px;
+    border:1px solid rgba(243,236,226,.18);
+    border-radius:999px;
+    background:rgba(7,11,31,.5);
+    backdrop-filter:blur(6px);
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:#CFC7D8;
+  }
+  .switch{
+    flex:0 0 auto;width:38px;height:21px;border-radius:999px;
+    background:rgba(243,236,226,.16);
+    border:1px solid rgba(243,236,226,.22);
+    position:relative;transition:background .45s ease,border-color .45s ease;
+  }
+  .switch i{
+    position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;
+    background:#CFC7D8;transition:transform .45s cubic-bezier(.3,1.5,.5,1),background .45s ease;
+  }
+  .modebar.on{border-color:rgba(46,143,114,.5);}
+  .modebar.on .switch{background:var(--ok);border-color:var(--ok);}
+  .modebar.on .switch i{transform:translateX(17px);background:#F3ECE2;}
+  .modetext{min-width:0;}
+  .modetext b{display:block;font-weight:700;color:var(--paper);letter-spacing:.1em;}
+  .modetext span{display:block;font-size:10px;letter-spacing:.06em;text-transform:none;color:var(--ink-faint);margin-top:2px;}
+
+  /* ---------- the pass ---------- */
+  .pass{
+    --notch:15px;
+    --perf:calc(100% - 172px);
+    position:relative;
+    background:linear-gradient(175deg,#FBF6EE 0%,var(--paper) 42%,#EDE4D7 100%);
+    color:var(--ink);
+    border-radius:18px;
+    box-shadow:0 30px 60px -22px rgba(3,5,18,.9), 0 2px 0 rgba(255,255,255,.35) inset;
+    overflow:hidden;
+    -webkit-mask-image:
+      radial-gradient(circle at 0 var(--perf), transparent var(--notch), #000 calc(var(--notch) + .5px)),
+      radial-gradient(circle at 100% var(--perf), transparent var(--notch), #000 calc(var(--notch) + .5px));
+            mask-image:
+      radial-gradient(circle at 0 var(--perf), transparent var(--notch), #000 calc(var(--notch) + .5px)),
+      radial-gradient(circle at 100% var(--perf), transparent var(--notch), #000 calc(var(--notch) + .5px));
+    -webkit-mask-composite:source-in;
+            mask-composite:intersect;
+    transition:transform .6s cubic-bezier(.2,.9,.3,1);
+  }
+  .pass.confirmed{transform:translateY(-4px) rotate(-.6deg);}
+
+  .pass-head{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:14px 20px;
+    background:var(--ink);color:var(--paper);
+  }
+  .brand{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.2em;font-weight:700;}
+  .brand svg{width:19px;height:19px;flex:0 0 auto;}
+  .pnr{font-size:11px;letter-spacing:.14em;color:#B9B2C6;}
+  .pnr b{color:var(--ember);font-weight:700;}
+
+  .pass-body{padding:22px 20px 18px;}
+
+  /* ---------- route: two places, one waypoint ---------- */
+  .route{
+    position:relative;
+    display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;
+  }
+  .route::before,.route::after{
+    content:"";position:absolute;top:22px;height:1px;
+    background-image:linear-gradient(90deg,var(--ink-faint) 0 5px,transparent 5px 11px);
+    background-size:11px 1px;opacity:.55;
+  }
+  .route::before{left:7%;right:calc(50% + 82px);}
+  .route::after{left:calc(50% + 82px);right:7%;}
+  .side{position:relative;}
+  .iata{font-size:38px;line-height:.95;font-weight:700;letter-spacing:.03em;}
+  .route .to{text-align:right;}
+  .place{font-size:10px;letter-spacing:.09em;color:var(--ink-soft);margin-top:7px;text-transform:uppercase;}
+  .leg{
+    position:relative;z-index:1;
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    padding:0 10px;
+  }
+  .leg svg{width:20px;height:20px;color:var(--rose-deep);}
+  .leg b{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--rose-deep);}
+  .leg span{font-size:8.5px;letter-spacing:.1em;color:var(--ink-faint);text-transform:uppercase;}
+
+  .dashline{
+    height:1px;margin:22px 0 16px;
+    background-image:linear-gradient(90deg,var(--paper-edge) 0 6px,transparent 6px 12px);
+    background-size:12px 1px;
+  }
+
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 10px;}
+  .cell k{display:block;font-size:9px;letter-spacing:.13em;color:var(--ink-faint);text-transform:uppercase;}
+  .cell v{display:block;font-size:15px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums;}
+  .cell v small{font-size:10px;font-weight:400;color:var(--ink-soft);letter-spacing:.04em;}
+  .cell.wide{grid-column:span 2;}
+  .cell.full{grid-column:1/-1;}
+
+  /* ---------- the question ---------- */
+  .ask{
+    margin-top:22px;padding-top:20px;
+    border-top:1px solid var(--paper-edge);
+  }
+  .ask-eyebrow{font-size:9px;letter-spacing:.2em;color:var(--rose-deep);text-transform:uppercase;}
+  .ask h1{
+    font-family:Fraunces,Georgia,"Times New Roman",serif;
+    font-variation-settings:"SOFT" 40,"WONK" 1,"opsz" 96;
+    font-weight:500;
+    font-size:clamp(28px,7.2vw,38px);
+    line-height:1.08;
+    letter-spacing:-.01em;
+    text-wrap:balance;
+    margin:8px 0 0;
+    color:var(--ink);
+  }
+  .ask h1 em{font-style:italic;color:var(--rose-deep);}
+  .ask .sub{
+    margin:10px 0 0;font-size:11.5px;line-height:1.7;color:var(--ink-soft);letter-spacing:.02em;
+  }
+
+  .actions{
+    position:relative;
+    margin-top:20px;
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  }
+  .btn{
+    font-family:inherit;font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    border-radius:10px;padding:14px 26px;cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .2s ease,box-shadow .25s ease,background .25s ease;
+  }
+  .btn:focus-visible{outline:2px solid var(--rose-deep);outline-offset:3px;}
+  #yes{
+    background:var(--ink);color:var(--paper);
+    box-shadow:0 8px 18px -8px rgba(21,24,43,.85);
+    transform:scale(var(--yes-scale,1));
+    transform-origin:left center;
+  }
+  #yes:hover{background:var(--rose-deep);box-shadow:0 12px 24px -8px rgba(201,58,92,.6);}
+  #no{
+    background:transparent;color:var(--ink-soft);
+    border-color:var(--paper-edge);
+    transform:scale(var(--no-scale,1));
+    white-space:nowrap;
+  }
+  #no.loose{
+    position:fixed;z-index:50;margin:0;
+    background:#FBF6EE;color:var(--ink-soft);
+    box-shadow:0 12px 26px -12px rgba(3,5,18,.75);
+    transition:left .2s cubic-bezier(.2,.9,.3,1),top .2s cubic-bezier(.2,.9,.3,1),transform .2s ease,opacity .4s ease;
+  }
+  #no.gone{opacity:0;pointer-events:none;transform:scale(.4) rotate(12deg);}
+  #noslot{display:none;}
+  #noslot.on{display:block;}
+
+  .whisper{
+    margin:14px 0 0;font-size:11px;color:var(--ink-faint);letter-spacing:.04em;min-height:1.2em;
+    transition:color .3s ease;
+  }
+  .whisper.warm{color:var(--rose-deep);}
+
+  /* ---------- stub ---------- */
+  .stub{
+    border-top:1px dashed var(--paper-edge);
+    padding:16px 20px 18px;
+    background:linear-gradient(180deg,rgba(227,217,203,.28),rgba(227,217,203,.06));
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .barcode{
+    flex:1 1 auto;height:46px;min-width:0;
+    background-image:
+      repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 5px),
+      repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 4px),
+      repeating-linear-gradient(90deg,var(--ink) 0 3px,transparent 3px 11px);
+    opacity:.82;
+  }
+  .stub-meta{text-align:right;flex:0 0 auto;}
+  .stub-meta k{display:block;font-size:9px;letter-spacing:.13em;color:var(--ink-faint);text-transform:uppercase;}
+  .stub-meta v{display:block;font-size:14px;font-weight:700;margin-top:2px;}
+
+  /* ---------- stamp ---------- */
+  .stamp{
+    position:absolute;right:16px;bottom:118px;z-index:6;
+    padding:8px 14px;
+    border:2.5px solid var(--rose-deep);border-radius:6px;
+    color:var(--rose-deep);
+    font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    transform:rotate(-13deg) scale(2.6);opacity:0;
+    box-shadow:inset 0 0 0 1px rgba(201,58,92,.4);
+    text-align:center;line-height:1.25;
+    pointer-events:none;
+  }
+  .stamp small{display:block;font-size:8.5px;letter-spacing:.12em;opacity:.8;font-weight:400;}
+  .pass.confirmed .stamp{animation:thud .55s cubic-bezier(.2,1.3,.35,1) forwards;}
+  @keyframes thud{
+    0%{transform:rotate(-13deg) scale(2.6);opacity:0;}
+    60%{opacity:.95;}
+    100%{transform:rotate(-13deg) scale(1);opacity:.92;}
+  }
+
+  /* ---------- confirmation ---------- */
+  .confirm{
+    border:1px solid rgba(255,154,107,.35);
+    border-radius:14px;
+    background:rgba(7,11,31,.55);
+    backdrop-filter:blur(8px);
+    padding:18px 20px;
+    display:none;
+  }
+  .confirm.show{display:block;animation:rise .6s cubic-bezier(.2,.9,.3,1) both;}
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+  .confirm h2{
+    font-family:Fraunces,Georgia,serif;font-variation-settings:"SOFT" 40,"WONK" 1;
+    font-weight:400;font-size:21px;margin:0 0 8px;color:var(--ember);
+  }
+  .confirm p{margin:0;font-size:12.5px;line-height:1.75;color:#D9D2E2;}
+  .confirm p + p{margin-top:8px;}
+  .confirm .tag{color:var(--rose);font-weight:700;}
+
+  .foot{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(243,236,226,.34);
+  }
+  .foot button{
+    font:inherit;letter-spacing:.12em;text-transform:uppercase;
+    background:none;border:0;color:rgba(243,236,226,.34);cursor:pointer;padding:4px;
+    border-bottom:1px solid rgba(243,236,226,.22);
+  }
+  .foot button:hover{color:var(--ember);border-color:var(--ember);}
+  .foot button:focus-visible{outline:2px solid var(--ember);outline-offset:2px;}
+
+  @media (max-width:430px){
+    .iata{font-size:29px;}
+    .place{font-size:9px;}
+    .leg{padding:0 6px;}
+    .route::before{right:calc(50% + 74px);}
+    .route::after{left:calc(50% + 74px);}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .cell.wide{grid-column:span 2;}
+    .btn{padding:13px 20px;font-size:12px;}
+    .stamp{bottom:auto;top:12px;right:12px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
+    .plane-amb{left:auto;right:12%;top:10%;opacity:.4;}
+    .pass.confirmed .stamp{opacity:.92;transform:rotate(-13deg) scale(1);}
+  }
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<div class="plane-amb" aria-hidden="true">
+  <svg viewBox="0 0 64 24" fill="none">
+    <path d="M2 13.6 61 11.2c1.3-.05 1.3-1.9 0-1.95L46.6 8.1 36.2 1.4a1.6 1.6 0 0 0-1.9.1l-.8.7 6.1 6.6-12.4-.6-4.6-4.3-1.9.6 2.6 4.4-8.6-.4-3.6-2.9-1.5.5 1.7 3.1-8 .9C1.2 10.5 1 13 2 13.6Z" fill="#F3ECE2"/>
+    <path d="M0 15.4h30" stroke="#FF9A6B" stroke-width="1" opacity=".55"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <div class="stage" id="stage">
+
+    <div class="modebar" id="modebar">
+      <span class="switch" aria-hidden="true"><i></i></span>
+      <span class="modetext">
+        <b id="mode-title">Modo avión · en espera</b>
+        <span id="mode-sub">Se activa solo cuando aceptes. Todo el mundo en silencio, menos tú.</span>
+      </span>
+    </div>
+
+    <div class="pass" id="pass">
+      <div class="pass-head">
+        <span class="brand">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2.4c.6 0 1.1.5 1.1 1.1v5.9l8 4.6v1.9l-8-2.5v4.7l2.5 1.7v1.4L12 20.4l-3.6.8v-1.4l2.5-1.7v-4.7l-8 2.5v-1.9l8-4.6V3.5c0-.6.5-1.1 1.1-1.1Z" fill="#FF9A6B"/>
+          </svg>
+          NOCTURNO AIR
+        </span>
+        <span class="pnr">PNR <b>2P3L15</b> · SEQ 002</span>
+      </div>
+
+      <div class="pass-body">
+        <div class="route">
+          <div class="side from">
+            <div class="iata">TÚ</div>
+            <div class="place">tu casa · tu manta</div>
+          </div>
+          <div class="leg">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3.6 21 19.4H3L12 3.6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <circle cx="12" cy="14.6" r="2.1" fill="currentColor"/>
+            </svg>
+            <b>PELIS</b>
+            <span>punto de encuentro</span>
+          </div>
+          <div class="side to">
+            <div class="iata">YO</div>
+            <div class="place">mi casa · mis palomitas</div>
+          </div>
+        </div>
+
+        <div class="dashline" aria-hidden="true"></div>
+
+        <div class="grid">
+          <div class="cell"><k>Vuelo</k><v>MV 0208</v></div>
+          <div class="cell"><k>Sala</k><v>LLAMADA</v></div>
+          <div class="cell"><k>Pantallas</k><v>2 <small>sincronizadas</small></v></div>
+          <div class="cell"><k>Escalas</k><v>0</v></div>
+          <div class="cell wide"><k>Play a la vez</k><v>20:00 <small>AST</small></v></div>
+          <div class="cell wide"><k>Distancia</k><v>IRRELEVANTE</v></div>
+          <div class="cell full"><k>Pasajeros</k><v id="pax">TÚ + YO</v></div>
+          <div class="cell full"><k>Equipaje permitido</k><v style="font-size:13px">tu manta · tus palomitas · la cámara encendida <small>SSR: MOVIE</small></v></div>
+        </div>
+
+        <div class="ask">
+          <div class="ask-eyebrow">Confirmación de embarque</div>
+          <h1 id="question">¿Verías una <em>película</em> hoy conmigo?</h1>
+          <p class="sub">Tú en tu casa, yo en la mía. Te llamo, contamos tres y le damos play al mismo tiempo.</p>
+
+          <div class="actions" id="actions">
+            <button class="btn" id="yes" type="button">Sí, dale play</button>
+            <span id="noslot" aria-hidden="true"></span>
+            <button class="btn" id="no" type="button">No</button>
+          </div>
+          <p class="whisper" id="whisper">La película la eliges tú. Yo pongo la puntualidad.</p>
+        </div>
+      </div>
+
+      <div class="stub">
+        <div class="barcode" aria-hidden="true"></div>
+        <div class="stub-meta">
+          <k>Vuelo</k><v>MV 0208</v>
+          <k style="margin-top:8px">Fecha</k><v id="stub-date">HOY</v>
+        </div>
+      </div>
+
+      <div class="stamp" id="stamp">Conectados<small>Call confirmed</small></div>
+    </div>
+
+    <div class="confirm" id="confirm">
+      <h2>Llamada confirmada ✈</h2>
+      <p>Hoy a las <span class="tag">20:00 AST</span> · punto de encuentro <span class="tag">PELIS</span> · dos pantallas, un solo play.</p>
+      <p>Modo avión activado para todo el mundo, menos para ti. Dime cuál vemos y yo cuento hasta tres.</p>
+    </div>
+
+    <div class="foot">
+      <span>Nocturno Air · Operado con cariño</span>
+      <button type="button" id="reset">Reiniciar</button>
+    </div>
+
+  </div>
+</div>
+
+<canvas id="burst" aria-hidden="true"></canvas>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------- aviso al correo cuando dice que sí ----------------
+     Pega aquí la Access Key de web3forms.com. Si queda vacía, no se
+     envía nada y la página funciona exactamente igual.                */
+  var AVISO_KEY = "";
+
+  function avisar(){
+    if(!AVISO_KEY) return;
+    try{
+      var cuando = new Date().toLocaleString("es-DO", {dateStyle:"full", timeStyle:"short"});
+      fetch("https://api.web3forms.com/submit", {
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body: JSON.stringify({
+          access_key: AVISO_KEY,
+          subject: "MV 0208 - Confirmado",
+          from_name: "Nocturno Air",
+          message: "Dijo que si.\n\n" + cuando + "\nPunto de encuentro: PELIS - play 20:00 AST"
+        })
+      }).catch(function(){});
+    }catch(e){}
+  }
+
+  /* ---------------- fecha de hoy en el talón ---------------- */
+  try{
+    var d = new Date();
+    var meses = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+    document.getElementById("stub-date").textContent =
+      String(d.getDate()).padStart(2,"0") + " " + meses[d.getMonth()];
+  }catch(e){}
+
+  /* ---------------- cielo estrellado ---------------- */
+  var sky = document.getElementById("sky"), sctx = sky.getContext("2d"), stars = [], sw=0, sh=0;
+  function sizeSky(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    sw = window.innerWidth; sh = window.innerHeight;
+    sky.width = sw*dpr; sky.height = sh*dpr; sky.style.width = sw+"px"; sky.style.height = sh+"px";
+    sctx.setTransform(dpr,0,0,dpr,0,0);
+    stars = [];
+    var n = Math.round(Math.min(150, sw*sh/9000));
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random()*sw, y:Math.random()*sh*0.85, r:Math.random()*1.25+0.25,
+                  a:Math.random()*0.55+0.2, s:Math.random()*0.014+0.004, p:Math.random()*6.28});
+    }
+  }
+  function drawSky(t){
+    sctx.clearRect(0,0,sw,sh);
+    for(var i=0;i<stars.length;i++){
+      var st = stars[i];
+      var al = reduce ? st.a : st.a + Math.sin(t*st.s + st.p)*0.28;
+      if(al < 0.04) continue;
+      sctx.globalAlpha = Math.min(al,1);
+      sctx.fillStyle = "#FFE8D2";
+      sctx.beginPath(); sctx.arc(st.x, st.y, st.r, 0, 6.2832); sctx.fill();
+    }
+    sctx.globalAlpha = 1;
+  }
+  sizeSky(); drawSky(0);
+  if(!reduce){ (function loop(t){ drawSky(t||0); requestAnimationFrame(loop); })(0); }
+  window.addEventListener("resize", function(){ sizeSky(); drawSky(0); });
+
+  /* ---------------- el botón que no se deja ---------------- */
+  var no = document.getElementById("no"),
+      yes = document.getElementById("yes"),
+      slot = document.getElementById("noslot"),
+      whisper = document.getElementById("whisper"),
+      pass = document.getElementById("pass"),
+      modebar = document.getElementById("modebar"),
+      confirmBox = document.getElementById("confirm");
+
+  var labels = ["No","¿Segura?","Ya tengo las palomitas","Te llamo igual","La peli la eliges tú",
+                "Pongo play cuando digas","Última llamada","Timbrando…"];
+  var murmurs = [
+    "La película la eliges tú. Yo pongo la puntualidad.",
+    "Ese botón está un poco nervioso.",
+    "Se mueve solo, yo no lo toqué.",
+    "Mira, hasta él sabe la respuesta.",
+    "Sigue huyendo. Yo sigo aquí.",
+    "Tranquila, el otro botón no se mueve.",
+    "Ese botón ya se cansó de correr.",
+    "Va a desaparecer en cualquier momento…"
+  ];
+
+  var tries = 0, locked = false, loose = false;
+  var px = window.innerWidth/2, py = window.innerHeight/2;
+
+  /* el "No" solo puede huir dentro del pase, y siempre dentro de la pantalla */
+  function playfield(w,h){
+    var p = pass.getBoundingClientRect(), pad = 8;
+    var left   = Math.max(pad, p.left + 8);
+    var right  = Math.min(window.innerWidth - pad, p.right - 8);
+    var top    = Math.max(pad, p.top + 8);
+    var bottom = Math.min(window.innerHeight - pad, p.bottom - 8);
+    return {
+      minX:left, minY:top,
+      maxX:Math.max(left, right - w),
+      maxY:Math.max(top,  bottom - h)
+    };
+  }
+
+  document.addEventListener("pointermove", function(e){
+    px = e.clientX; py = e.clientY;
+    if(loose && !locked && e.pointerType === "mouse"){
+      var r = no.getBoundingClientRect();
+      var dx = px - (r.left + r.width/2), dy = py - (r.top + r.height/2);
+      if(dx*dx + dy*dy < 4900) flee();   /* 70px */
+    }
+  }, {passive:true});
+
+  function flee(){
+    if(locked) return;
+    tries++;
+
+    if(!loose){
+      var r0 = no.getBoundingClientRect();
+      slot.style.width = r0.width + "px";
+      slot.style.height = r0.height + "px";
+      slot.classList.add("on");
+      no.style.left = r0.left + "px";
+      no.style.top  = r0.top + "px";
+      no.classList.add("loose");
+      loose = true;
+    }
+
+    no.textContent = labels[Math.min(tries, labels.length - 1)];
+    whisper.textContent = murmurs[Math.min(tries, murmurs.length - 1)];
+    whisper.classList.add("warm");
+
+    var scale = Math.max(0.72, 1 - tries*0.035);
+    no.style.setProperty("--no-scale", scale);
+    yes.style.setProperty("--yes-scale", Math.min(1.14, 1 + tries*0.02));
+
+    var r = no.getBoundingClientRect();
+    var w = r.width, h = r.height;
+    var curX = r.left, curY = r.top;
+    var f = playfield(w,h);
+    var yr = yes.getBoundingClientRect(), ycx = yr.left + yr.width/2, ycy = yr.top + yr.height/2;
+
+    var best = null, bestScore = -1;
+    for(var i=0;i<24;i++){
+      var cx = f.minX + Math.random()*(f.maxX - f.minX);
+      var cy = f.minY + Math.random()*(f.maxY - f.minY);
+      if(Math.hypot(cx - curX, cy - curY) < 60) continue;          /* que se note el salto */
+      var mx = cx + w/2, my = cy + h/2;
+      if(Math.hypot(mx - ycx, my - ycy) < 92) continue;            /* que no tape al "Sí" */
+      var score = Math.hypot(mx - px, my - py);
+      if(score > bestScore){ bestScore = score; best = [cx, cy]; }
+    }
+    if(!best){
+      best = [f.minX + Math.random()*(f.maxX - f.minX), f.minY + Math.random()*(f.maxY - f.minY)];
+    }
+
+    no.style.left = best[0] + "px";
+    no.style.top  = best[1] + "px";
+
+    if(tries >= labels.length){
+      no.classList.add("gone");
+      no.setAttribute("tabindex","-1");
+      no.setAttribute("aria-hidden","true");
+      whisper.textContent = "La llamada ya está a tu nombre.";
+    }
+  }
+
+  no.addEventListener("pointerenter", function(e){ if(e.pointerType === "mouse") flee(); });
+  no.addEventListener("focus", flee);
+  no.addEventListener("touchstart", function(e){ e.preventDefault(); flee(); }, {passive:false});
+  no.addEventListener("click", function(e){ e.preventDefault(); flee(); });
+
+  /* si cambia el tamaño de la ventana, que no se quede fuera */
+  window.addEventListener("resize", function(){
+    if(!loose || locked) return;
+    var r = no.getBoundingClientRect(), f = playfield(r.width, r.height);
+    no.style.left = Math.min(Math.max(r.left, f.minX), f.maxX) + "px";
+    no.style.top  = Math.min(Math.max(r.top,  f.minY), f.maxY) + "px";
+  });
+
+  /* ---------------- sí ---------------- */
+  function say_yes(){
+    if(locked) return;
+    locked = true;
+
+    pass.classList.add("confirmed");
+    no.classList.add("gone");
+    no.setAttribute("tabindex","-1");
+    no.setAttribute("aria-hidden","true");
+    whisper.textContent = "Te llamo a las 20:00. No te duermas.";
+    whisper.classList.add("warm");
+    yes.textContent = "Confirmado ✈";
+    yes.disabled = true;
+    yes.style.cursor = "default";
+
+    setTimeout(function(){
+      modebar.classList.add("on");
+      document.getElementById("mode-title").textContent = "Modo avión · activado";
+      document.getElementById("mode-sub").textContent = "Silencio para todos. Excepto para esta llamada.";
+    }, 520);
+
+    setTimeout(function(){ confirmBox.classList.add("show"); }, 760);
+    burst();
+    avisar();
+  }
+  yes.addEventListener("click", say_yes);
+
+  /* ---------------- confeti ---------------- */
+  var bc = document.getElementById("burst"), bctx = bc.getContext("2d"), bits = [], raf = 0;
+  function sizeBurst(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    bc.width = window.innerWidth*dpr; bc.height = window.innerHeight*dpr;
+    bc.style.width = window.innerWidth+"px"; bc.style.height = window.innerHeight+"px";
+    bctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  sizeBurst();
+  window.addEventListener("resize", sizeBurst);
+
+  function burst(){
+    if(reduce) return;
+    var glyphs = ["✦","✈","♥","✧","•"];
+    var colors = ["#FF5D7E","#FF9A6B","#F3ECE2","#FFE8D2","#C93A5C"];
+    var r = yes.getBoundingClientRect();
+    var ox = r.left + r.width/2, oy = r.top + r.height/2;
+    for(var i=0;i<110;i++){
+      var ang = -Math.PI/2 + (Math.random() - 0.5)*2.4;
+      var sp = 5 + Math.random()*11;
+      bits.push({
+        x:ox, y:oy, vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp,
+        g:glyphs[(Math.random()*glyphs.length)|0],
+        c:colors[(Math.random()*colors.length)|0],
+        s:9 + Math.random()*11, rot:Math.random()*6.28, vr:(Math.random()-0.5)*0.24, life:1
+      });
+    }
+    if(!raf) raf = requestAnimationFrame(stepBurst);
+  }
+  function stepBurst(){
+    bctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    for(var i=bits.length-1;i>=0;i--){
+      var b = bits[i];
+      b.vy += 0.26; b.vx *= 0.992; b.x += b.vx; b.y += b.vy; b.rot += b.vr; b.life -= 0.0085;
+      if(b.life <= 0 || b.y > window.innerHeight + 60){ bits.splice(i,1); continue; }
+      bctx.save();
+      bctx.globalAlpha = Math.max(0, Math.min(1, b.life));
+      bctx.translate(b.x, b.y); bctx.rotate(b.rot);
+      bctx.fillStyle = b.c; bctx.font = "700 " + b.s + "px 'Space Mono', monospace";
+      bctx.textAlign = "center"; bctx.textBaseline = "middle";
+      bctx.fillText(b.g, 0, 0);
+      bctx.restore();
+    }
+    if(bits.length){ raf = requestAnimationFrame(stepBurst); }
+    else { raf = 0; bctx.clearRect(0,0,window.innerWidth,window.innerHeight); }
+  }
+
+  /* ---------------- reiniciar ---------------- */
+  document.getElementById("reset").addEventListener("click", function(){
+    locked = false; loose = false; tries = 0;
+    no.className = "btn"; no.removeAttribute("style"); no.removeAttribute("tabindex"); no.removeAttribute("aria-hidden");
+    no.textContent = "No";
+    slot.classList.remove("on");
+    yes.textContent = "Sí, dale play"; yes.disabled = false; yes.style.cursor = "pointer";
+    yes.style.setProperty("--yes-scale", 1);
+    pass.classList.remove("confirmed");
+    confirmBox.classList.remove("show");
+    modebar.classList.remove("on");
+    document.getElementById("mode-title").textContent = "Modo avión · en espera";
+    document.getElementById("mode-sub").textContent = "Se activa solo cuando aceptes. Todo el mundo en silencio, menos tú.";
+    whisper.textContent = murmurs[0];
+    whisper.classList.remove("warm");
+  });
+
+  /* ---------------- estado si la página se republica ---------------- */
+  try{
+    if(window.claude && window.claude.hot){
+      window.claude.hot.snapshot(function(){ return {locked:locked}; });
+      var boot = function(data){ if(data && data.locked) say_yes(); };
+      window.claude.hot.ready ? window.claude.hot.ready(boot) : boot(window.claude.hot.data || {});
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
