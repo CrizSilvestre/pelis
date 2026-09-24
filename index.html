@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#070B1F">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Pase de abordar &middot; MV 0208">
-<meta property="og:description" content="Nocturno Air &middot; embarque 20:00 AST. Tienes un asiento asignado.">
+<meta property="og:description" content="Nocturno Air &middot; embarque 21:00 AST. Tienes un asiento asignado.">
 <meta property="og:url" content="https://crizsilvestre.github.io/pelis/">
 <meta property="og:image" content="https://crizsilvestre.github.io/pelis/og.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -408,7 +408,7 @@
           <div class="cell"><k>Sala</k><v>LLAMADA</v></div>
           <div class="cell"><k>Pantallas</k><v>2 <small>sincronizadas</small></v></div>
           <div class="cell"><k>Escalas</k><v>0</v></div>
-          <div class="cell wide"><k>Play a la vez</k><v>20:00 <small>AST</small></v></div>
+          <div class="cell wide"><k>Play a la vez</k><v>21:00 <small>AST</small></v></div>
           <div class="cell wide"><k>Distancia</k><v>IRRELEVANTE</v></div>
           <div class="cell full"><k>Pasajeros</k><v id="pax">TÚ + YO</v></div>
           <div class="cell full"><k>Equipaje permitido</k><v style="font-size:13px">tu manta · tus palomitas · la cámara encendida <small>SSR: MOVIE</small></v></div>
@@ -441,7 +441,7 @@
 
     <div class="confirm" id="confirm">
       <h2>Llamada confirmada ✈</h2>
-      <p>Hoy a las <span class="tag">20:00 AST</span> · punto de encuentro <span class="tag">PELIS</span> · dos pantallas, un solo play.</p>
+      <p>Hoy a las <span class="tag">21:00 AST</span> · punto de encuentro <span class="tag">PELIS</span> · dos pantallas, un solo play.</p>
       <p>Modo avión activado para todo el mundo, menos para ti. Dime cuál vemos y yo cuento hasta tres.</p>
 
       <form class="mailform" id="mailform" hidden>
@@ -496,7 +496,7 @@
           message: (prueba ? "*** PRUEBA (abriste la pagina con ?test=1) ***\n\n" : "")
                  + "Dijo que si.\n\n"
                  + "Hora en RD: " + cuando + "\n"
-                 + "Punto de encuentro: PELIS - play 20:00 AST"
+                 + "Punto de encuentro: PELIS - play 21:00 AST"
         })
       }).catch(function(){});
     }catch(e){}
@@ -692,7 +692,7 @@
     no.classList.add("gone");
     no.setAttribute("tabindex","-1");
     no.setAttribute("aria-hidden","true");
-    whisper.textContent = "Te llamo a las 20:00. No te duermas.";
+    whisper.textContent = "Te llamo a las 21:00. No te duermas.";
     whisper.classList.add("warm");
     yes.textContent = "Confirmado ✈";
     yes.disabled = true;
