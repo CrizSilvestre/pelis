@@ -293,6 +293,38 @@
   .confirm p + p{margin-top:8px;}
   .confirm .tag{color:var(--rose);font-weight:700;}
 
+  .mailform{
+    margin-top:16px;padding-top:16px;
+    border-top:1px solid rgba(255,154,107,.22);
+  }
+  .mailform label{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ember);margin-bottom:9px;
+  }
+  .mailrow{display:flex;gap:9px;flex-wrap:wrap;}
+  .mailform input{
+    flex:1 1 190px;min-width:0;
+    font-family:inherit;font-size:13px;
+    padding:12px 14px;border-radius:9px;
+    background:rgba(243,236,226,.07);
+    border:1px solid rgba(243,236,226,.22);
+    color:var(--paper);
+  }
+  .mailform input::placeholder{color:rgba(243,236,226,.35);}
+  .mailform input:focus{outline:2px solid var(--ember);outline-offset:1px;border-color:transparent;}
+  .mailform button{
+    font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    padding:12px 20px;border-radius:9px;border:0;cursor:pointer;
+    background:var(--ember);color:#1A1024;
+    transition:background .25s ease,opacity .25s ease;
+  }
+  .mailform button:hover:not(:disabled){background:#FFB48B;}
+  .mailform button:disabled{opacity:.5;cursor:default;}
+  .mailform button:focus-visible{outline:2px solid var(--paper);outline-offset:2px;}
+  .mailnote{margin:10px 0 0;font-size:11px;line-height:1.6;color:var(--ink-faint);min-height:1.2em;}
+  .mailnote.ok{color:var(--ok);}
+  .mailnote.bad{color:var(--rose);}
+
   .foot{
     display:flex;justify-content:space-between;align-items:center;gap:10px;
     font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(243,236,226,.34);
@@ -410,6 +442,16 @@
       <h2>Llamada confirmada ✈</h2>
       <p>Hoy a las <span class="tag">20:00 AST</span> · punto de encuentro <span class="tag">PELIS</span> · dos pantallas, un solo play.</p>
       <p>Modo avión activado para todo el mundo, menos para ti. Dime cuál vemos y yo cuento hasta tres.</p>
+
+      <form class="mailform" id="mailform" hidden>
+        <label for="pax-mail">¿A qué correo te mando el pase?</label>
+        <div class="mailrow">
+          <input id="pax-mail" name="email" type="email" required
+                 placeholder="tucorreo@ejemplo.com" autocomplete="email" inputmode="email">
+          <button type="submit" id="mailsend">Emitir pase</button>
+        </div>
+        <p class="mailnote" id="mailnote">Te llega el pase de abordar completo, a tu nombre.</p>
+      </form>
     </div>
 
     <div class="foot">
@@ -661,11 +703,84 @@
       document.getElementById("mode-sub").textContent = "Silencio para todos. Excepto para esta llamada.";
     }, 520);
 
-    setTimeout(function(){ confirmBox.classList.add("show"); }, 760);
+    setTimeout(function(){
+      confirmBox.classList.add("show");
+      if(emisionActiva()) mailform.hidden = false;
+    }, 760);
     burst();
     avisar();
   }
   yes.addEventListener("click", say_yes);
+
+  /* ---------------- emitir el pase al correo de ella ----------------
+     Rellena los tres valores de EMAILJS y el formulario aparece solo.
+     Mientras estén vacíos, no se muestra nada.                        */
+  var EMAILJS = { publicKey:"", serviceId:"", templateId:"" };
+
+  var mailform = document.getElementById("mailform"),
+      mailnote = document.getElementById("mailnote"),
+      mailsend = document.getElementById("mailsend"),
+      mailinput = document.getElementById("pax-mail");
+
+  function emisionActiva(){
+    return !!(EMAILJS.publicKey && EMAILJS.serviceId && EMAILJS.templateId);
+  }
+
+  mailform.addEventListener("submit", function(e){
+    e.preventDefault();
+    var correo = mailinput.value.trim();
+    if(!correo || !emisionActiva()) return;
+
+    mailsend.disabled = true;
+    mailsend.textContent = "Emitiendo…";
+    mailnote.className = "mailnote";
+    mailnote.textContent = "Emitiendo el pase…";
+
+    var hoy = new Date();
+    var fecha;
+    try{
+      fecha = hoy.toLocaleDateString("es-DO", {weekday:"long", day:"numeric", month:"long"});
+    }catch(e2){ fecha = hoy.toDateString(); }
+
+    fetch("https://api.emailjs.com/api/v1.0/email/send", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        service_id: EMAILJS.serviceId,
+        template_id: EMAILJS.templateId,
+        user_id: EMAILJS.publicKey,
+        template_params: { to_email: correo, fecha: fecha, pnr: "2P3L15" }
+      })
+    }).then(function(r){
+      if(!r.ok) throw new Error(r.status);
+      mailnote.className = "mailnote ok";
+      mailnote.textContent = "Pase emitido. Revísalo en tu correo (mira también el spam).";
+      mailsend.textContent = "Emitido ✈";
+      mailinput.disabled = true;
+      avisarEmision(correo);
+    }).catch(function(){
+      mailnote.className = "mailnote bad";
+      mailnote.textContent = "No se pudo emitir. Inténtalo otra vez en un momento.";
+      mailsend.disabled = false;
+      mailsend.textContent = "Emitir pase";
+    });
+  });
+
+  function avisarEmision(correo){
+    if(!AVISO_KEY) return;
+    try{
+      fetch("https://api.web3forms.com/submit", {
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body: JSON.stringify({
+          access_key: AVISO_KEY,
+          from_name: "Nocturno Air",
+          subject: "MV 0208 - Pase emitido",
+          message: "Pidio que le mandaran el pase a: " + correo
+        })
+      }).catch(function(){});
+    }catch(e){}
+  }
 
   /* ---------------- confeti ---------------- */
   var bc = document.getElementById("burst"), bctx = bc.getContext("2d"), bits = [], raf = 0;
@@ -724,6 +839,11 @@
     yes.style.setProperty("--yes-scale", 1);
     pass.classList.remove("confirmed");
     confirmBox.classList.remove("show");
+    mailform.hidden = true;
+    mailsend.disabled = false; mailsend.textContent = "Emitir pase";
+    mailinput.disabled = false; mailinput.value = "";
+    mailnote.className = "mailnote";
+    mailnote.textContent = "Te llega el pase de abordar completo, a tu nombre.";
     modebar.classList.remove("on");
     document.getElementById("mode-title").textContent = "Modo avión · en espera";
     document.getElementById("mode-sub").textContent = "Se activa solo cuando aceptes. Todo el mundo en silencio, menos tú.";
